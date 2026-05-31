@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a3a1a">
+<meta name="description" content="Las vacas no dan leche — hay que ordeñarlas. Lección de vida interactiva.">
+<meta property="og:title" content="🐄 Las Vacas No Dan Leche">
+<meta property="og:description" content="Nada es gratis. Hay que trabajar para obtener resultados. Aprende la lección más importante de la vida.">
+<meta property="og:image" content="https://placehold.co/1200x630/1a3a1a/f5e642?text=🐄+Las+Vacas+No+Dan+Leche">
+<meta property="og:url" content="https://vibraspositivashm.com/vaca">
+<meta name="twitter:card" content="summary_large_image">
+<title>🐄 Las Vacas No Dan Leche</title>
+<link rel="manifest" href="#" id="manifestLink">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --verde-oscuro: #0f2a0f;
+    --verde-campo: #1e5c1e;
+    --verde-pasto: #2d7a2d;
+    --amarillo-sol: #f5e642;
+    --amarillo-leche: #fffde0;
+    --marron-tierra: #5c3a1e;
+    --marron-vaca: #8b5e3c;
+    --blanco-leche: #f0f8e8;
+    --rojo-alerta: #c0392b;
+    --accent: #f5e642;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--verde-oscuro);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* CIELO Y PASTO ANIMADO */
+  .escena {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cielo {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, #0a1628 0%, #1a3a5c 40%, #2d6a4f 100%);
+    animation: amanece 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes amanece {
+    0% { background: linear-gradient(180deg, #0a1628 0%, #1a3a5c 40%, #2d6a4f 100%); }
+    50% { background: linear-gradient(180deg, #1a2a0a 0%, #4a7c2f 40%, #5a9e3a 100%); }
+    100% { background: linear-gradient(180deg, #2a1a0a 0%, #7a4a1a 40%, #5a9e3a 100%); }
+  }
+
+  .sol {
+    position: absolute;
+    top: 8%;
+    right: 12%;
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, #ffeb3b 30%, #ff9800 70%, transparent 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px 15px rgba(255,235,59,0.3);
+    animation: solGira 20s linear infinite;
+  }
+
+  @keyframes solGira {
+    from { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    to { transform: rotate(360deg) scale(1); }
+  }
+
+  .nube {
+    position: absolute;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50px;
+    filter: blur(8px);
+  }
+  .nube1 { width: 120px; height: 40px; top: 8%; left: -150px; animation: nubeFlota 18s linear infinite; }
+  .nube2 { width: 80px; height: 30px; top: 16%; left: -100px; animation: nubeFlota 25s linear 5s infinite; }
+  .nube3 { width: 150px; height: 45px; top: 5%; left: -180px; animation: nubeFlota 22s linear 10s infinite; }
+
+  @keyframes nubeFlota {
+    from { left: -200px; }
+    to { left: 110%; }
+  }
+
+  .pasto {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(180deg, #1e5c1e 0%, #145214 40%, #0d3d0d 100%);
+  }
+
+  .pasto-ondas {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 30px;
+    background: repeating-linear-gradient(
+      90deg,
+      #2d7a2d 0px, #2d7a2d 20px,
+      #1e5c1e 20px, #1e5c1e 40px
+    );
+    border-radius: 50% 50% 0 0 / 10px 10px 0 0;
+  }
+
+  /* ESTRELLAS */
+  .estrella {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: white;
+    border-radius: 50%;
+    animation: parpadea 2s ease-in-out infinite alternate;
+  }
+  @keyframes parpadea {
+    from { opacity: 0.2; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.5); }
+  }
+
+  /* CONTENIDO PRINCIPAL */
+  .contenido {
+    position: relative;
+    z-index: 10;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 0 120px;
+  }
+
+  /* HEADER IMPACTANTE */
+  .header {
+    text-align: center;
+    padding: 40px 20px 20px;
+    position: relative;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: var(--rojo-alerta);
+    color: white;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 14px;
+    letter-spacing: 3px;
+    padding: 6px 20px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    animation: pulsa 2s ease-in-out infinite;
+  }
+
+  @keyframes pulsa {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .titulo-principal {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(42px, 10vw, 72px);
+    color: var(--amarillo-sol);
+    line-height: 0.95;
+    text-shadow: 4px 4px 0px var(--marron-tierra), 0 0 40px rgba(245,230,66,0.3);
+    letter-spacing: 2px;
+    animation: tituloEntrada 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  }
+
+  @keyframes tituloEntrada {
+    from { opacity: 0; transform: translateY(-40px) scale(0.8); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .titulo-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 10px;
+  }
+
+  /* VACA PRINCIPAL - SVG ANIMADO */
+  .vaca-container {
+    position: relative;
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .vaca-svg {
+    width: 260px;
+    height: 200px;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+    transition: transform 0.3s;
+  }
+
+  .vaca-svg:hover {
+    transform: scale(1.05);
+  }
+
+  .vaca-container.ordenando .vaca-svg {
+    animation: vacaSacude 0.3s ease-in-out;
+  }
+
+  @keyframes vacaSacude {
+    0%, 100% { transform: translateX(0) scale(1); }
+    25% { transform: translateX(-5px) scale(1.02); }
+    75% { transform: translateX(5px) scale(1.02); }
+  }
+
+  /* BURBUJAS DE LECHE */
+  .burbuja-leche {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 30% 30%, white, #e0f7e0);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: burbujaFlota 1.5s ease-out forwards;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  @keyframes burbujaFlota {
+    0% { opacity: 1; transform: translateY(0) scale(0.5); }
+    60% { opacity: 0.8; transform: translateY(-80px) scale(1); }
+    100% { opacity: 0; transform: translateY(-140px) scale(0.3); }
+  }
+
+  /* CUBETA DE LECHE */
+  .cubeta-container {
+    text-align: center;
+    padding: 0 20px 10px;
+    position: relative;
+  }
+
+  .cubeta-label {
+    font-family: 'Bebas Neue', cursive;
+    color: var(--amarillo-sol);
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+
+  .cubeta {
+    width: 100px;
+    height: 80px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .cubeta-nivel {
+    position: absolute;
+    bottom: 8px;
+    left: 8px; right: 8px;
+    background: linear-gradient(180deg, #e0f7e0, #b8e6b8);
+    border-radius: 0 0 8px 8px;
+    transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-height: 0;
+  }
+
+  /* LECCIONES EDUCATIVAS */
+  .lecciones {
+    padding: 10px 20px;
+  }
+
+  .leccion-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(245,230,66,0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .leccion-card.visible {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .leccion-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--amarillo-sol);
+  }
+
+  .leccion-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 48px;
+    color: rgba(245,230,66,0.15);
+    position: absolute;
+    top: 10px; right: 15px;
+    line-height: 1;
+  }
+
+  .leccion-emoji {
+    font-size: 32px;
+    margin-bottom: 10px;
+    display: block;
+    animation: emojiPulsa 3s ease-in-out infinite;
+  }
+
+  @keyframes emojiPulsa {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(-5deg); }
+  }
+
+  .leccion-titulo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 22px;
+    color: var(--amarillo-sol);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .leccion-texto {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .leccion-texto strong {
+    color: var(--amarillo-sol);
+  }
+
+  /* BOTÓN ORDEÑAR */
+  .btn-ordenar {
+    display: block;
+    width: calc(100% - 40px);
+    margin: 0 20px 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--amarillo-sol), #e6d400);
+    color: var(--verde-oscuro);
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
+    letter-spacing: 3px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(245,230,66,0.3), 0 0 0 0 rgba(245,230,66,0.5);
+    animation: btnLatido 2s ease-in-out infinite;
+    transition: transform 0.1s;
+  }
+
+  @keyframes btnLatido {
+    0%, 100% { box-shadow: 0 6px 20px rgba(245,230,66,0.3), 0 0 0 0 rgba(245,230,66,0.5); }
+    50% { box-shadow: 0 6px 20px rgba(245,230,66,0.5), 0 0 0 12px rgba(245,230,66,0); }
+  }
+
+  .btn-ordenar:active {
+    transform: scale(0.96);
+  }
+
+  .btn-ordenar::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s, opacity 0.4s;
+    opacity: 0;
+  }
+
+  .btn-ordenar:active::after {
+    width: 300px; height: 300px;
+    opacity: 0;
+  }
+
+  /* CONTADOR */
+  .contador-container {
+    text-align: center;
+    padding: 0 20px 20px;
+  }
+
+  .contador-texto {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .contador-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 48px;
+    color: var(--amarillo-sol);
+    display: block;
+    line-height: 1;
+    animation: numCambia 0.3s ease-out;
+  }
+
+  @keyframes numCambia {
+    0% { transform: scale(1.4); color: white; }
+    100% { transform: scale(1); color: var(--amarillo-sol); }
+  }
+
+  /* MENSAJE DINAMICO */
+  .mensaje-dinamico {
+    margin: 0 20px 20px;
+    padding: 16px 20px;
+    background: rgba(192,57,43,0.15);
+    border: 1px solid rgba(192,57,43,0.4);
+    border-radius: 10px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #ff8a80;
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .mensaje-dinamico.activo {
+    opacity: 1;
+  }
+
+  /* FRASES FILOSOFICAS */
+  .frases-section {
+    padding: 0 20px 20px;
+  }
+
+  .frase-grande {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(28px, 7vw, 48px);
+    line-height: 1.1;
+    color: white;
+    text-align: center;
+    padding: 30px 10px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+  }
+
+  .frase-grande.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .frase-grande .highlight {
+    color: var(--amarillo-sol);
+    display: block;
+    font-size: 1.3em;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+  }
+
+  .frase-grande .subtext {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.35em;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 3px;
+    margin-top: 10px;
+  }
+
+  /* PROGRESO GAMIFICADO */
+  .progreso-section {
+    margin: 0 20px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .progreso-label {
+    font-family: 'Bebas Neue', cursive;
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  .progreso-barra-bg {
+    height: 12px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .progreso-barra {
+    height: 100%;
+    background: linear-gradient(90deg, var(--verde-campo), var(--amarillo-sol));
+    border-radius: 6px;
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    width: 0%;
+  }
+
+  .progreso-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .progreso-meta span {
+    color: var(--amarillo-sol);
+    font-weight: bold;
+  }
+
+  /* LOGROS */
+  .logros-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .logro {
+    text-align: center;
+    padding: 10px 5px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.4s;
+    filter: grayscale(1);
+    opacity: 0.4;
+  }
+
+  .logro.desbloqueado {
+    filter: grayscale(0);
+    opacity: 1;
+    background: rgba(245,230,66,0.1);
+    border-color: rgba(245,230,66,0.4);
+    animation: logroDesbloqueado 0.5s ease;
+  }
+
+  @keyframes logroDesbloqueado {
+    0% { transform: scale(0.5) rotate(-10deg); }
+    60% { transform: scale(1.2) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  .logro-emoji { font-size: 24px; display: block; }
+  .logro-texto { font-size: 9px; color: rgba(255,255,255,0.6); margin-top: 4px; line-height: 1.2; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 0 20px;
+  }
+
+  .footer-brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* MODAL CELEBRACIÓN */
+  .modal-celebracion {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+
+  .modal-celebracion.activo {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal-contenido {
+    text-align: center;
+    padding: 40px 30px;
+    max-width: 360px;
+    transform: scale(0.7);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .modal-celebracion.activo .modal-contenido {
+    transform: scale(1);
+  }
+
+  .modal-emoji { font-size: 80px; display: block; margin-bottom: 20px; animation: rotaGrande 2s ease-in-out infinite; }
+  @keyframes rotaGrande {
+    0%, 100% { transform: rotate(-10deg) scale(1); }
+    50% { transform: rotate(10deg) scale(1.1); }
+  }
+
+  .modal-titulo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 48px;
+    color: var(--amarillo-sol);
+    margin-bottom: 10px;
+  }
+
+  .modal-texto {
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .modal-btn {
+    background: var(--amarillo-sol);
+    color: var(--verde-oscuro);
+    border: none;
+    padding: 16px 40px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    letter-spacing: 2px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  /* CONFETI */
+  .confeti {
+    position: fixed;
+    width: 8px; height: 8px;
+    top: -10px;
+    border-radius: 2px;
+    animation: caerConfeti 3s ease-in forwards;
+    z-index: 999;
+  }
+
+  @keyframes caerConfeti {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* INSTALACIÓN PWA */
+  .pwa-banner {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(135deg, #1e5c1e, #0f2a0f);
+    border-top: 2px solid var(--amarillo-sol);
+    padding: 16px 20px;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .pwa-banner.visible { transform: translateY(0); }
+
+  .pwa-texto {
+    flex: 1;
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .pwa-texto strong { color: var(--amarillo-sol); font-size: 15px; display: block; }
+
+  .pwa-btn {
+    background: var(--amarillo-sol);
+    color: var(--verde-oscuro);
+    border: none;
+    padding: 10px 16px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .pwa-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  /* SCROLL ANIMADO */
+  @keyframes slideInLeft {
+    from { transform: translateX(-60px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  .separador {
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+    opacity: 0.3;
+    letter-spacing: 8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ESCENA DE FONDO -->
+<div class="escena">
+  <div class="cielo"></div>
+  <div class="sol"></div>
+  <div class="nube nube1"></div>
+  <div class="nube nube2"></div>
+  <div class="nube nube3"></div>
+  <div class="pasto"><div class="pasto-ondas"></div></div>
+  <!-- Estrellas generadas por JS -->
+</div>
+
+<!-- CONTENIDO -->
+<div class="contenido">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">⚠️ LECCIÓN DE VIDA</div>
+    <h1 class="titulo-principal">Las Vacas<br>No Dan<br>Leche</h1>
+    <p class="titulo-sub">Hay que ordeñarlas.</p>
+  </div>
+
+  <!-- VACA INTERACTIVA -->
+  <div class="vaca-container" id="vacaContainer" onclick="ordenar()">
+    <svg class="vaca-svg" id="vacaSvg" viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+      <!-- Sombra -->
+      <ellipse cx="150" cy="210" rx="100" ry="12" fill="rgba(0,0,0,0.3)"/>
+      
+      <!-- CUERPO -->
+      <ellipse cx="150" cy="140" rx="95" ry="65" fill="#f5f0e8"/>
+      <!-- Manchas -->
+      <ellipse cx="120" cy="120" rx="25" ry="20" fill="#8b5e3c" transform="rotate(-15,120,120)"/>
+      <ellipse cx="180" cy="155" rx="20" ry="15" fill="#8b5e3c" transform="rotate(10,180,155)"/>
+      <ellipse cx="145" cy="165" rx="12" ry="10" fill="#8b5e3c"/>
+
+      <!-- PATAS traseras -->
+      <rect x="90" y="185" width="22" height="35" rx="8" fill="#e8e0d0"/>
+      <rect x="185" y="185" width="22" height="35" rx="8" fill="#e8e0d0"/>
+      <!-- Pezuñas -->
+      <rect x="88" y="212" width="26" height="10" rx="4" fill="#5c3a1e"/>
+      <rect x="183" y="212" width="26" height="10" rx="4" fill="#5c3a1e"/>
+
+      <!-- PATAS delanteras -->
+      <rect x="108" y="183" width="20" height="38" rx="7" fill="#e8e0d0"/>
+      <rect x="168" y="183" width="20" height="38" rx="7" fill="#e8e0d0"/>
+      <rect x="106" y="213" width="24" height="9" rx="3" fill="#5c3a1e"/>
+      <rect x="166" y="213" width="24" height="9" rx="3" fill="#5c3a1e"/>
+
+      <!-- UBRE -->
+      <ellipse cx="150" cy="198" rx="30" ry="14" fill="#f4c0c0"/>
+      <circle cx="138" cy="208" r="5" fill="#e8a0a0"/>
+      <circle cx="152" cy="210" r="5" fill="#e8a0a0"/>
+      <circle cx="164" cy="207" r="5" fill="#e8a0a0"/>
+
+      <!-- CUELLO Y CABEZA -->
+      <rect x="210" y="100" width="35" height="50" rx="10" fill="#f0e8d8"/>
+      <!-- Cabeza -->
+      <ellipse cx="248" cy="90" rx="38" ry="32" fill="#f5f0e8"/>
+      <!-- Hocico -->
+      <ellipse cx="278" cy="98" rx="20" ry="15" fill="#f0d0c0"/>
+      <circle cx="272" cy="97" r="4" fill="#8b5e3c"/>
+      <circle cx="283" cy="97" r="4" fill="#8b5e3c"/>
+      <!-- Ojos -->
+      <circle cx="245" cy="80" r="8" fill="#3a2a1a"/>
+      <circle cx="247" cy="78" r="3" fill="white"/>
+      <!-- Cuernos -->
+      <path d="M235 65 Q225 45 220 38" stroke="#c8a068" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M255 62 Q260 42 265 35" stroke="#c8a068" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <!-- Orejas -->
+      <ellipse cx="225" cy="73" rx="12" ry="8" fill="#f0e8d8" transform="rotate(-30,225,73)"/>
+      <ellipse cx="225" cy="73" rx="8" ry="5" fill="#f4c0c0" transform="rotate(-30,225,73)"/>
+      
+      <!-- COLA -->
+      <path d="M60 130 Q30 120 35 100 Q40 82 50 90" stroke="#c8a068" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="52" cy="87" rx="8" ry="12" fill="#8b5e3c" transform="rotate(-20,52,87)"/>
+      
+      <!-- CAMPANILLA -->
+      <rect x="238" y="118" width="14" height="16" rx="3" fill="#d4a017"/>
+      <circle cx="245" cy="138" r="3" fill="#a07010"/>
+
+      <!-- CUBETA (se anima) -->
+      <g id="cubetaVaca" transform="translate(108, 192)">
+        <rect x="0" y="15" width="34" height="25" rx="4" fill="#d4a017"/>
+        <rect x="2" y="17" width="30" height="21" rx="3" fill="#b8941a"/>
+        <path d="M5 15 Q17 8 29 15" stroke="#d4a017" stroke-width="3" fill="none"/>
+      </g>
+    </svg>
+
+    <div style="text-align:center; margin-top:8px;">
+      <span style="font-family:'Space Mono'; font-size:11px; color:rgba(255,255,255,0.4); letter-spacing:2px; text-transform:uppercase;">👆 Toca para ordeñar</span>
+    </div>
+  </div>
+
+  <!-- MENSAJE DINÁMICO -->
+  <div class="mensaje-dinamico" id="mensajeDinamico">
+    "El que quiere leche, tiene que ordeñar la vaca..."
+  </div>
+
+  <!-- CONTADOR + CUBETA -->
+  <div style="display:flex; gap:20px; align-items:center; padding:0 30px 10px;">
+    <div class="contador-container" style="flex:1; padding:0;">
+      <span class="contador-texto">Litros obtenidos</span>
+      <span class="contador-num" id="contadorNum">0</span>
+    </div>
+    <div class="cubeta-container" style="padding:0;">
+      <svg width="90" height="90" viewBox="0 0 90 90">
+        <defs>
+          <clipPath id="cubetaClip">
+            <rect x="12" y="18" width="66" height="58" rx="5"/>
+          </clipPath>
+        </defs>
+        <!-- Cubeta cuerpo -->
+        <path d="M15 20 L10 78 Q10 85 18 85 L72 85 Q80 85 80 78 L75 20 Z" fill="#c8941a"/>
+        <path d="M18 22 L13 78 Q13 83 20 83 L70 83 Q77 83 77 78 L72 22 Z" fill="#e0aa20"/>
+        <!-- Nivel de leche -->
+        <rect id="nivelLeche" x="14" y="83" width="62" height="0" rx="3" fill="#e8f5e8" clip-path="url(#cubetaClip)" style="transition: y 0.5s ease, height 0.5s ease"/>
+        <!-- Tapa superior -->
+        <ellipse cx="45" cy="20" rx="35" ry="8" fill="#d4a017"/>
+        <!-- Asa -->
+        <path d="M20 15 Q45 5 70 15" stroke="#b8841a" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- Brillo -->
+        <rect x="22" y="30" width="6" height="35" rx="3" fill="rgba(255,255,255,0.15)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- BOTÓN ORDEÑAR -->
+  <button class="btn-ordenar" id="btnOrdenar" onclick="ordenar()">
+    🐄 ¡ORDEÑAR AHORA!
+  </button>
+
+  <!-- PROGRESO -->
+  <div class="progreso-section">
+    <div class="progreso-label">TU PROGRESO DE APRENDIZAJE</div>
+    <div class="progreso-barra-bg">
+      <div class="progreso-barra" id="progresoBarra"></div>
+    </div>
+    <div class="progreso-meta">
+      Meta: <span id="metaTexto">0 / 50 litros</span> para completar la lección
+    </div>
+    <div class="logros-grid" id="logrosGrid"></div>
+  </div>
+
+  <div class="separador">· · ·</div>
+
+  <!-- LECCIONES EDUCATIVAS -->
+  <div class="lecciones">
+
+    <div class="leccion-card" data-delay="100">
+      <span class="leccion-num">01</span>
+      <span class="leccion-emoji">🐄</span>
+      <div class="leccion-titulo">La Verdad Sobre las Vacas</div>
+      <p class="leccion-texto">
+        Una vaca no "da" leche. La <strong>produce</strong> con esfuerzo biológico. 
+        Y tú la obtienes con trabajo de <strong>ordeño</strong>. 
+        Nadie te la trae a la cama. Esta es la primera ley del universo:
+        <strong>nada llega sin acción.</strong>
+      </p>
+    </div>
+
+    <div class="leccion-card" data-delay="200">
+      <span class="leccion-num">02</span>
+      <span class="leccion-emoji">💡</span>
+      <div class="leccion-titulo">Lo Regalado Sale Caro</div>
+      <p class="leccion-texto">
+        Lo que no te cuesta, no lo valoras. Cuando algo llega gratis, 
+        inconscientemente crees que puedes perderlo y conseguir otro igual. 
+        Pero cuando <strong>lo ganaste con esfuerzo</strong>, lo cuidas, lo administras, 
+        lo multiplicas. <strong>El costo forma el carácter.</strong>
+      </p>
+    </div>
+
+    <div class="leccion-card" data-delay="300">
+      <span class="leccion-num">03</span>
+      <span class="leccion-emoji">⚡</span>
+      <div class="leccion-titulo">Lo Regalado Se Acaba</div>
+      <p class="leccion-texto">
+        Los subsidios terminan. Los programas sociales cambian. 
+        Las promesas políticas se olvidan. Pero la <strong>habilidad para trabajar</strong>, 
+        para producir, para crear valor... eso <strong>nadie te lo puede quitar.</strong>
+        Invierte en capacidades, no en dádivas.
+      </p>
+    </div>
+
+    <div class="leccion-card" data-delay="400">
+      <span class="leccion-num">04</span>
+      <span class="leccion-emoji">🗳️</span>
+      <div class="leccion-titulo">Elige Con Inteligencia</div>
+      <p class="leccion-texto">
+        El político que te promete todo gratis <strong>está comprando tu voto</strong> 
+        con el dinero de tus propios impuestos. Te da un vaso de leche hoy 
+        y te quita la vaca mañana. 
+        <strong>Vota por quien te enseña a ordeñar, no por quien te promete leche.</strong>
+      </p>
+    </div>
+
+    <div class="leccion-card" data-delay="500">
+      <span class="leccion-num">05</span>
+      <span class="leccion-emoji">🔥</span>
+      <div class="leccion-titulo">El Esfuerzo Es el Camino</div>
+      <p class="leccion-texto">
+        El campesino que madruga a las 4 AM a ordeñar su vaca, 
+        que siembra en tierra dura y cosecha con manos callosas, 
+        ese tiene algo que ningún subsidio puede dar: 
+        <strong>dignidad, independencia y orgullo de lo propio.</strong>
+      </p>
+    </div>
+
+    <div class="leccion-card" data-delay="600">
+      <span class="leccion-num">06</span>
+      <span class="leccion-emoji">🌱</span>
+      <div class="leccion-titulo">Siembra Hoy, Cosecha Mañana</div>
+      <p class="leccion-texto">
+        Colombia tiene tierra, agua, sol y gente brillante. 
+        Tenemos todo para ser prósperos. Lo que falta no es más ayuda del gobierno. 
+        Lo que falta es más personas que entiendan esta verdad simple:
+        <strong>la vaca no da leche sola. Hay que ordeñarla.</strong>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- FRASES FILOSÓFICAS -->
+  <div class="frases-section">
+    <div class="frase-grande" id="frase1">
+      <span class="highlight">Pueblo que pide,</span>
+      pueblo que obedece.
+      <span class="subtext">— Ley de la dependencia</span>
+    </div>
+
+    <div class="frase-grande" id="frase2">
+      <span class="highlight">Trabaja en silencio,</span>
+      deja que el éxito haga el ruido.
+      <span class="subtext">— Frank Ocean</span>
+    </div>
+
+    <div class="frase-grande" id="frase3">
+      <span class="highlight">No esperes</span>
+      oportunidades. Créalas.
+      <span class="subtext">— George Bernard Shaw</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p class="footer-brand">Desarrollada por Vibras Positivas HM — Derechos de Autor Reservados</p>
+  </div>
+
+</div>
+
+<!-- MODAL CELEBRACIÓN -->
+<div class="modal-celebracion" id="modalCelebracion">
+  <div class="modal-contenido">
+    <span class="modal-emoji" id="modalEmoji">🏆</span>
+    <div class="modal-titulo" id="modalTitulo">¡LOGRO!</div>
+    <p class="modal-texto" id="modalTexto"></p>
+    <button class="modal-btn" onclick="cerrarModal()">¡SEGUIR TRABAJANDO!</button>
+  </div>
+</div>
+
+<!-- BANNER PWA -->
+<div class="pwa-banner" id="pwaBanner">
+  <div class="pwa-texto">
+    <strong>📱 Instalar App</strong>
+    Lleva esta lección siempre contigo
+  </div>
+  <button class="pwa-btn" id="pwaInstalarBtn" onclick="instalarPWA()">Instalar</button>
+  <button class="pwa-close" onclick="cerrarBannerPWA()">✕</button>
+</div>
+
+<script>
+// =============================================
+// ESTADO DE LA APP
+// =============================================
+let litros = parseInt(localStorage.getItem('litros') || '0');
+let deferredPrompt = null;
+const META = 50;
+
+const MENSAJES = [
+  "«El trabajo es el precio que se paga por la reputación.» — Conde Chesterfield",
+  "«Sin esfuerzo no hay fruto, sin fruto no hay vida.»",
+  "«Nada en el mundo puede reemplazar la persistencia.» — Calvin Coolidge",
+  "«El éxito llega cuando la preparación encuentra la oportunidad.»",
+  "«La disciplina es el puente entre metas y logros.» — Jim Rohn",
+  "«Trabaja mientras ellos duermen, aprende mientras ellos descansan.»",
+  "«Lo gratis tiene precio oculto: tu dignidad y tu libertad.»",
+  "«El campesino que madruga nunca le pide al sol que salga antes.»",
+  "«Cosechas lo que siembras. Siembra trabajo, cosecha prosperidad.»",
+  "«No pidas permiso para trabajar. El trabajo es tu derecho y tu deber.»",
+  "«Una vaca bien ordeñada alimenta una familia. Un voto bien pensado cambia un país.»",
+  "«El que da pescado alimenta un día. El que enseña a pescar, alimenta toda la vida.»",
+];
+
+const LOGROS = [
+  { id: 'primer_litro', emoji: '🥛', texto: 'Primer litro', meta: 1 },
+  { id: 'cinco_litros', emoji: '💪', texto: '5 litros', meta: 5 },
+  { id: 'trabajador', emoji: '⭐', texto: 'Trabajador', meta: 15 },
+  { id: 'ordenador', emoji: '🏅', texto: 'Ordeñador', meta: 30 },
+  { id: 'maestro', emoji: '🏆', texto: 'Maestro', meta: 50 },
+  { id: 'ejemplo', emoji: '👑', texto: 'Ejemplo', meta: 100 },
+  { id: 'sensei', emoji: '🌟', texto: 'Sensei', meta: 200 },
+  { id: 'leyenda', emoji: '🐄', texto: 'Leyenda', meta: 500 },
+];
+
+const CELEBRACIONES = {
+  1: { emoji: '🥛', titulo: '¡PRIMER LITRO!', texto: 'Empezaste. El primer paso es el más difícil. Pero ya lo diste. El trabajo empieza aquí.' },
+  5: { emoji: '💪', titulo: '¡5 LITROS!', texto: 'Ya entendiste el proceso. No esperaste que la leche cayera del cielo. La buscaste.' },
+  15: { emoji: '⭐', titulo: '¡15 LITROS!', texto: 'Eres un trabajador de verdad. Colombia necesita más personas como tú.' },
+  30: { emoji: '🏅', titulo: '¡30 LITROS!', texto: 'Ya puedes enseñarle a otros. El conocimiento que libera es el del trabajo honesto.' },
+  50: { emoji: '🏆', titulo: '¡LECCIÓN COMPLETADA!', texto: '¡Lo lograste! Ya sabes la verdad: nada es gratis, todo tiene un costo. El que trabaja, elige. El que no trabaja, obedece.' },
+};
+
+// =============================================
+// INICIALIZACIÓN
+// =============================================
+window.addEventListener('load', () => {
+  crearEstrellas();
+  renderLogros();
+  actualizarUI();
+  setTimeout(mostrarLecciones, 500);
+  setTimeout(mostrarPWABanner, 4000);
+});
+
+function crearEstrellas() {
+  const escena = document.querySelector('.cielo');
+  for (let i = 0; i < 40; i++) {
+    const e = document.createElement('div');
+    e.className = 'estrella';
+    e.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 70}%;
+      animation-delay: ${Math.random() * 3}s;
+      animation-duration: ${1.5 + Math.random() * 2}s;
+      width: ${Math.random() > 0.8 ? 4 : 2}px;
+      height: ${Math.random() > 0.8 ? 4 : 2}px;
+    `;
+    escena.appendChild(e);
+  }
+}
+
+function renderLogros() {
+  const grid = document.getElementById('logrosGrid');
+  grid.innerHTML = LOGROS.map(l => `
+    <div class="logro ${litros >= l.meta ? 'desbloqueado' : ''}" id="logro_${l.id}">
+      <span class="logro-emoji">${l.emoji}</span>
+      <div class="logro-texto">${l.texto}<br>${l.meta}L</div>
+    </div>
+  `).join('');
+}
+
+function mostrarLecciones() {
+  const cards = document.querySelectorAll('.leccion-card');
+  const frases = document.querySelectorAll('.frase-grande');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = parseInt(entry.target.dataset.delay || 0);
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  cards.forEach(c => observer.observe(c));
+  frases.forEach(f => observer.observe(f));
+}
+
+// =============================================
+// ORDEÑAR
+// =============================================
+function ordenar() {
+  litros++;
+  localStorage.setItem('litros', litros);
+
+  // Animación vaca
+  const container = document.getElementById('vacaContainer');
+  container.classList.add('ordenando');
+  setTimeout(() => container.classList.remove('ordenando'), 400);
+
+  // Burbujas de leche
+  crearBurbuja();
+
+  // Actualizar UI
+  actualizarUI();
+  mostrarMensaje();
+  verificarLogros();
+  verificarCelebracion();
+}
+
+function crearBurbuja() {
+  const container = document.getElementById('vacaContainer');
+  const rect = container.getBoundingClientRect();
+
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => {
+      const b = document.createElement('div');
+      b.className = 'burbuja-leche';
+      b.textContent = ['🥛', '💧', '⚪'][Math.floor(Math.random() * 3)];
+      b.style.cssText = `
+        left: ${100 + (Math.random() - 0.5) * 80}px;
+        bottom: ${50 + Math.random() * 40}px;
+        position: absolute;
+        font-size: ${14 + Math.random() * 10}px;
+        animation-delay: 0s;
+      `;
+      container.appendChild(b);
+      setTimeout(() => b.remove(), 1600);
+    }, i * 100);
+  }
+}
+
+function actualizarUI() {
+  // Contador
+  const numEl = document.getElementById('contadorNum');
+  numEl.textContent = litros;
+  numEl.style.animation = 'none';
+  void numEl.offsetWidth;
+  numEl.style.animation = 'numCambia 0.3s ease-out';
+
+  // Nivel cubeta
+  const nivel = document.getElementById('nivelLeche');
+  const porcentaje = Math.min(litros / META * 100, 100);
+  const alturaMax = 61; // píxeles disponibles en SVG
+  const alturaActual = (porcentaje / 100) * alturaMax;
+  const yPos = 83 - alturaActual;
+  nivel.setAttribute('y', yPos);
+  nivel.setAttribute('height', alturaActual);
+
+  // Barra progreso
+  const barra = document.getElementById('progresoBarra');
+  barra.style.width = `${Math.min(porcentaje, 100)}%`;
+
+  // Meta texto
+  document.getElementById('metaTexto').textContent = `${litros} / ${META} litros`;
+}
+
+let mensajeIndex = 0;
+function mostrarMensaje() {
+  const el = document.getElementById('mensajeDinamico');
+  el.classList.remove('activo');
+  setTimeout(() => {
+    el.textContent = MENSAJES[mensajeIndex % MENSAJES.length];
+    el.classList.add('activo');
+    mensajeIndex++;
+  }, 300);
+}
+
+function verificarLogros() {
+  LOGROS.forEach(l => {
+    const el = document.getElementById(`logro_${l.id}`);
+    if (el && litros >= l.meta && !el.classList.contains('desbloqueado')) {
+      el.classList.add('desbloqueado');
+    }
+  });
+}
+
+function verificarCelebracion() {
+  const cel = CELEBRACIONES[litros];
+  if (cel) {
+    setTimeout(() => mostrarCelebracion(cel), 300);
+  }
+}
+
+function mostrarCelebracion(cel) {
+  document.getElementById('modalEmoji').textContent = cel.emoji;
+  document.getElementById('modalTitulo').textContent = cel.titulo;
+  document.getElementById('modalTexto').textContent = cel.texto;
+  document.getElementById('modalCelebracion').classList.add('activo');
+  lanzarConfeti();
+}
+
+function cerrarModal() {
+  document.getElementById('modalCelebracion').classList.remove('activo');
+}
+
+function lanzarConfeti() {
+  const colores = ['#f5e642', '#2d7a2d', '#c0392b', '#ffffff', '#f0d0c0', '#1e5c1e'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confeti';
+      c.style.cssText = `
+        left: ${Math.random() * 100}vw;
+        background: ${colores[Math.floor(Math.random() * colores.length)]};
+        width: ${6 + Math.random() * 8}px;
+        height: ${6 + Math.random() * 8}px;
+        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+        animation-duration: ${2 + Math.random() * 2}s;
+        animation-delay: 0s;
+      `;
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }, i * 40);
+  }
+}
+
+// =============================================
+// PWA
+// =============================================
+let manifest = {
+  name: "Las Vacas No Dan Leche",
+  short_name: "Ordeña Ya",
+  description: "Lección de vida interactiva: el trabajo es el único camino.",
+  start_url: ".",
+  display: "standalone",
+  background_color: "#0f2a0f",
+  theme_color: "#1a3a1a",
+  icons: [
+    { src: "https://placehold.co/192x192/1a3a1a/f5e642?text=🐄", sizes: "192x192", type: "image/png" },
+    { src: "https://placehold.co/512x512/1a3a1a/f5e642?text=🐄", sizes: "512x512", type: "image/png" }
+  ]
+};
+
+// Crear manifest dinámico
+const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+const manifestURL = URL.createObjectURL(blob);
+document.getElementById('manifestLink').href = manifestURL;
+
+// Service Worker inline
+const swCode = `
+const CACHE = 'vacas-v1';
+const ASSETS = ['/'];
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(() => {})));
+  self.skipWaiting();
+});
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(r => r || fetch(e.request))
+  );
+});
+`;
+
+const swBlob = new Blob([swCode], { type: 'application/javascript' });
+const swURL = URL.createObjectURL(swBlob);
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register(swURL).catch(() => {});
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('pwaBanner').classList.add('visible');
+});
+
+function instalarPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      cerrarBannerPWA();
+    });
+  }
+}
+
+function cerrarBannerPWA() {
+  document.getElementById('pwaBanner').classList.remove('visible');
+}
+
+function mostrarPWABanner() {
+  if (!deferredPrompt) {
+    // En iOS mostrar instrucciones
+    const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+    if (isIOS) {
+      document.getElementById('pwaBanner').classList.add('visible');
+      document.querySelector('.pwa-texto strong').textContent = '📱 Instalar en iPhone';
+      document.querySelector('.pwa-texto').lastChild.textContent = 'Toca Compartir → "Agregar a pantalla de inicio"';
+      document.getElementById('pwaInstalarBtn').style.display = 'none';
+    }
+  }
+}
+
+// Mensaje inicial
+setTimeout(() => {
+  const el = document.getElementById('mensajeDinamico');
+  el.textContent = '«El campesino que madruga a ordeñar nunca le pide al sol que salga antes.»';
+  el.classList.add('activo');
+}, 1000);
+</script>
+</body>
+</html>
